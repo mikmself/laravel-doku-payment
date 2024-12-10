@@ -33,9 +33,8 @@
         </div>
         <div class="flex items-center justify-between">
             <label class="flex items-center text-sm text-gray-600">
-
             </label>
-            <a href="/register" class="text-sm text-purple-500 hover:underline">Or Register</a>
+            <a href="/register" class="text-sm text-purple-500 hover:underline">Or Register?</a>
         </div>
         <button type="submit" class="w-full mt-4 bg-gradient-to-r from-purple-500 to-blue-500 text-white py-2 rounded-md hover:from-purple-600 hover:to-blue-600 focus:outline-none focus:ring-4 focus:ring-purple-300 animate-pulse">Login</button>
     </form>
