@@ -42,7 +42,8 @@ class CheckoutController extends Controller
         );
         try {
             $snapToken = Snap::getSnapToken($transaction);
-            return view('payment', compact('snapToken'));
+            $product = Product::where('id', 1)->first();
+            return view('payment', compact('snapToken','product'));
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
         }
