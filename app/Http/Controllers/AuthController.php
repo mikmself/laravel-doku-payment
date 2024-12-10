@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
+
 class AuthController extends Controller
 {
     public function loginPage()
@@ -43,15 +45,18 @@ class AuthController extends Controller
     }
     public function register(Request $request)
     {
-        $validatedData = $request->validate([
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:6|confirmed',
+            'password' => 'required|min:6',
         ]);
+        if($validator->fails()){
+            session()->flash('error', $validator->errors()->first());
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
         try {
             DB::beginTransaction();
-
-            $user = User::create([
+            User::create([
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
