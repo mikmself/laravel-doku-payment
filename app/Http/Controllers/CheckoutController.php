@@ -10,9 +10,8 @@ use Midtrans\Config;
 
 class CheckoutController extends Controller
 {
-    public function checkoutForm()
+    public function checkoutForm(Product $product)
     {
-        $product = Product::find(1);
         return view('checkout', compact('product'));
     }
     public function processCheckout(Request $request)
