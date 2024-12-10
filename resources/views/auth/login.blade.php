@@ -31,6 +31,12 @@
             <label for="password" class="block text-gray-700 font-medium">Password</label>
             <input type="password" id="password" name="password" placeholder="Enter your password" class="w-full px-4 py-2 mt-2 bg-gray-100 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500">
         </div>
+        <div class="flex items-center justify-between">
+            <label class="flex items-center text-sm text-gray-600">
+
+            </label>
+            <a href="/register" class="text-sm text-purple-500 hover:underline">Or Register</a>
+        </div>
         <button type="submit" class="w-full mt-4 bg-gradient-to-r from-purple-500 to-blue-500 text-white py-2 rounded-md hover:from-purple-600 hover:to-blue-600 focus:outline-none focus:ring-4 focus:ring-purple-300 animate-pulse">Login</button>
     </form>
 </div>
