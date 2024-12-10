@@ -6,6 +6,7 @@
     <title>@yield('title')</title>
     <script src="https://cdn.tailwindcss.com"></script>
     @yield('style')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body class="@yield('stylebody','bg-gray-100')">
 <header class="bg-gray-800 p-4 text-white sticky top-0 z-50 shadow-lg">
@@ -39,5 +40,26 @@
     </div>
 </footer>
 @yield('script')
+<script>
+    @if (session('success'))
+    Swal.fire({
+        icon: 'success',
+        title: 'Success!',
+        text: "{{ session('success') }}",
+    });
+    @elseif (session('warning'))
+    Swal.fire({
+        icon: 'warning',
+        title: 'Warning!',
+        text: "{{ session('warning') }}",
+    });
+    @elseif (session('error'))
+    Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: "{{ session('error') }}",
+    });
+    @endif
+</script>
 </body>
 </html>
