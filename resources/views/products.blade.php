@@ -15,7 +15,7 @@
         </a>
         <nav class="flex space-x-4">
             <a href="/" class="text-white hover:text-gray-400">Home</a>
-            <a href="/store" class="text-white hover:text-gray-400">Produk</a>
+            <a href="{{ route('products') }}" class="text-white hover:text-gray-400">Produk</a>
             <a href="{{ route('index') }}/#about-us" class="text-white hover:text-gray-400">About</a>
         </nav>
         <div class="flex items-center space-x-4">
