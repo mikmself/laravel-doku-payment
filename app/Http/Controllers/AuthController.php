@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\User;
@@ -8,14 +7,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
-use RealRashid\SweetAlert\Facades\Alert;
-
 class AuthController extends Controller
 {
-    public function loginPage(){
+    public function loginPage()
+    {
         return view('auth.login');
     }
-    public function registerPage(){
+    public function registerPage()
+    {
         return view('auth.register');
     }
     public function login(Request $request)
@@ -25,8 +24,9 @@ class AuthController extends Controller
                 'email' => 'required|email',
                 'password' => 'required|min:6',
             ]);
+
             if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-                Alert::success('Login Success', 'Welcome back, ' . Auth::user()->name . '!');
+                session()->flash('success', 'Welcome back, ' . Auth::user()->name . '!');
                 return redirect()->intended('/');
             } else {
                 throw ValidationException::withMessages([
@@ -34,10 +34,10 @@ class AuthController extends Controller
                 ]);
             }
         } catch (ValidationException $e) {
-            Alert::error('Login Failed', $e->getMessage());
+            session()->flash('error', 'Login Failed: ' . $e->getMessage());
             return redirect()->back()->withErrors($e->errors())->withInput();
         } catch (\Throwable $e) {
-            Alert::error('Unexpected Error', 'Something went wrong. Please try again.');
+            session()->flash('error', 'Unexpected Error: Something went wrong. Please try again.');
             return redirect()->back()->withInput();
         }
     }
@@ -48,7 +48,6 @@ class AuthController extends Controller
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6|confirmed',
         ]);
-
         try {
             DB::beginTransaction();
 
@@ -58,17 +57,12 @@ class AuthController extends Controller
                 'password' => Hash::make($request->password),
                 'role' => 'user',
             ]);
-
             DB::commit();
-
-            alert()->success('Registration Success', 'Your account has been created successfully.');
-
+            session()->flash('success', 'Your account has been created successfully.');
             return redirect()->route('login');
         } catch (\Throwable $e) {
             DB::rollBack();
-
-            alert()->error('Registration Failed', 'Something went wrong. Please try again.');
-
+            session()->flash('error', 'Registration Failed: Something went wrong. Please try again.');
             return redirect()->back()->withInput();
         }
     }
@@ -78,10 +72,10 @@ class AuthController extends Controller
             Auth::logout();
             $request->session()->invalidate();
             $request->session()->regenerateToken();
-            Alert::success('Logged Out', 'You have been successfully logged out.');
+            session()->flash('success', 'You have been successfully logged out.');
             return redirect()->route('login');
         } catch (\Throwable $e) {
-            Alert::error('Logout Failed', 'Something went wrong. Please try again.');
+            session()->flash('error', 'Logout Failed: Something went wrong. Please try again.');
             return redirect()->back();
         }
     }
