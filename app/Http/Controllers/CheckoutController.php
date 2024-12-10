@@ -4,29 +4,47 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Midtrans\Snap;
+use Midtrans\Config;
+use Midtrans\Transaction;
 
 class CheckoutController extends Controller
 {
-    public function show(Product $product)
+    public function checkoutForm()
     {
+        $product = Product::find(1);
         return view('checkout', compact('product'));
     }
-    public function process(Request $request)
+    public function processCheckout(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'address' => 'required|string|max:500',
-            'phone' => 'required|string|max:15',
-            'payment_method' => 'required|string',
-        ]);
-        $transaction = auth()->user()->transactions()->create([
-            'product_id' => $request->product_id,
-            'amount' => $request->amount,
-            'payment_method' => $validated['payment_method'],
-            'transaction_status' => 'pending', // status awal
-            'transaction_id' => uniqid('trans_'),
-        ]);
-        alert()->success('Checkout Berhasil', 'Silakan pilih metode pembayaran.');
-        return redirect()->route('payment.process', $transaction->id);
+        Config::$serverKey = env('MIDTRANS_SERVER_KEY');
+        Config::$clientKey = env('MIDTRANS_CLIENT_KEY');
+        Config::$isProduction = false;  // Set false untuk mode sandbox
+        Config::$isSanitized = true;
+        Config::$is3ds = true;
+        $transactionDetails = array(
+            'order_id' => 'order_' . time(),
+            'gross_amount' => (int) $request->total_price,
+        );
+        $customerDetails = array(
+            'first_name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'address' => $request->address,
+        );
+        $payment = array(
+            'payment_type' => $request->payment_method,
+        );
+        $transaction = array(
+            'transaction_details' => $transactionDetails,
+            'customer_details' => $customerDetails,
+            'payment' => $payment,
+        );
+        try {
+            $snapToken = Snap::getSnapToken($transaction);
+            return view('payment', compact('snapToken'));
+        } catch (\Exception $e) {
+            return back()->with('error', 'Terjadi kesalahan, coba lagi!');
+        }
     }
 }

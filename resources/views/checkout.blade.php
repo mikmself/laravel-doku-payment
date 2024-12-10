@@ -14,14 +14,13 @@
                 </div>
             </div>
         </div>
-        <form method="POST" action="{{ route('checkout.process') }}">
+        <form method="POST" action="{{ route('checkout.process-checkout') }}">
             @csrf
             <div class="bg-white shadow-md rounded-lg p-6 mb-6">
                 <h3 class="text-lg font-bold mb-4">Informasi Pengiriman</h3>
                 <div class="mb-4">
                     <label for="name" class="block text-gray-700 font-medium">Nama Lengkap</label>
-                    <input type="text" name="name" id="name" class="w-full px-4 py-2 mt-2 bg-gray-100 border border-gray-300 rounded-md"
-                           required>
+                    <input type="text" name="name" id="name" class="w-full px-4 py-2 mt-2 bg-gray-100 border border-gray-300 rounded-md" required>
                 </div>
                 <div class="mb-4">
                     <label for="address" class="block text-gray-700 font-medium">Alamat Pengiriman</label>
@@ -29,8 +28,7 @@
                 </div>
                 <div class="mb-4">
                     <label for="phone" class="block text-gray-700 font-medium">Nomor Telepon</label>
-                    <input type="text" name="phone" id="phone" class="w-full px-4 py-2 mt-2 bg-gray-100 border border-gray-300 rounded-md"
-                           required>
+                    <input type="text" name="phone" id="phone" class="w-full px-4 py-2 mt-2 bg-gray-100 border border-gray-300 rounded-md" required>
                 </div>
             </div>
             <div class="bg-white shadow-md rounded-lg p-6 mb-6">

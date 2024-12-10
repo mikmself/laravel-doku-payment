@@ -13,7 +13,7 @@
                             <p class="text-gray-600 mt-2">{{ $product->description }}</p>
                             <div class="mt-4 flex justify-between items-center">
                                 <span class="text-blue-600 font-bold">Rp{{ number_format($product->price, 0, ',', '.') }}</span>
-                                <a href="{{ route('checkout.show', $product->id) }}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Beli sekarang</a>
+                                <a href="{{ route('checkout.checkout-form', $product->id) }}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Beli sekarang</a>
                             </div>
                         </div>
                     </div>
