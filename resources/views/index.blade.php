@@ -51,8 +51,8 @@
             <a href="{{ route('index') }}/#about-us" class="text-white hover:text-gray-400">About</a>
         </nav>
         <div class="flex space-x-4">
-            <a href="/loginuser" class="px-6 py-2 rounded-full bg-pink-500 text-white font-semibold shadow-lg hover:bg-pink-400 transition">Login</a>
-            <a href="/registrasi" class="px-6 py-2 rounded-full bg-white text-pink-500 border-2 border-pink-500 font-semibold shadow-lg hover:bg-pink-100 transition">Sign-up</a>
+            <a href="{{ route('login') }}" class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-600">Login</a>
+            <a href="{{ route('register') }}" class="bg-white text-black px-4 py-2 rounded hover:bg-gray-100">Register</a>
         </div>
     </div>
 </header>

@@ -27,8 +27,8 @@
                     <button type="submit" class="text-white hover:text-gray-400">Logout</button>
                 </form>
             @else
-                <a href="/loginuser" class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-600">Login</a>
-                <a href="/registrasi" class="bg-white text-black px-4 py-2 rounded hover:bg-gray-100">Sign-up</a>
+                <a href="{{ route('login') }}" class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-600">Login</a>
+                <a href="{{ route('register') }}" class="bg-white text-black px-4 py-2 rounded hover:bg-gray-100">Register</a>
             @endif
         </div>
     </div>
