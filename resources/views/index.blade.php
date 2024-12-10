@@ -46,8 +46,8 @@
         </a>
         <nav class="flex space-x-6">
             <a href="#" class="text-lg font-medium hover:text-pink-400 transition">Home</a>
-            <a href="/store" class="text-lg font-medium hover:text-pink-400 transition">Produk</a>
-            <a href="#about-us" class="text-lg font-medium hover:text-pink-400 transition">About</a>
+            <a href="{{ route('products') }}" class="text-lg font-medium hover:text-pink-400 transition">Produk</a>
+            <a href="{{ route('index') }}/#about-us" class="text-white hover:text-gray-400">About</a>
         </nav>
         <div class="flex space-x-4">
             <a href="/loginuser" class="px-6 py-2 rounded-full bg-pink-500 text-white font-semibold shadow-lg hover:bg-pink-400 transition">Login</a>
