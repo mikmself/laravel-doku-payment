@@ -10,7 +10,7 @@ class EnsureUserCanCheckout
 {
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::check() && Auth::user()->role !== 'user') {
+        if (Auth::user()->role === 'user') {
             return redirect()->back();
         }
         return $next($request);

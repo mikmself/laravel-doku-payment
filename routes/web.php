@@ -12,6 +12,6 @@ Route::post('register', [\App\Http\Controllers\AuthController::class, 'register'
 
 Route::middleware(['auth'])->group(function () {
     Route::post('logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
-    Route::get('/checkout/{product}', [\App\Http\Controllers\CheckoutController::class, 'show'])->name('checkout.show');
-    Route::post('/checkout', [\App\Http\Controllers\CheckoutController::class, 'process'])->name('checkout.process');
+    Route::get('/checkout/{product}', [\App\Http\Controllers\CheckoutController::class, 'show'])->name('checkout.show')->middleware('can.checkout');
+    Route::post('/checkout', [\App\Http\Controllers\CheckoutController::class, 'process'])->name('checkout.process')->middleware('can.checkout');
 });
