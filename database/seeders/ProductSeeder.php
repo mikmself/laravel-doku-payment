@@ -11,24 +11,24 @@ class ProductSeeder extends Seeder
     public function run(): void
     {
         Product::create([
-            'name' => "Baju Merah",
-            'image' => "https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//catalog-image/106/MTA-105436779/no-brand_kaos-polos-merah-premium-bahan-cotton_full01.jpg",
-            'description' => "Baju warna merah",
-            'price' => 200000,
+            'name' => "Kursi Kayu",
+            'image' => "https://res.cloudinary.com/dfa5oe9qp/image/upload/v1733829278/furniture/y34dkxkkrwchgs1dsdei.jpg",
+            'description' => "Kursi kayu jati",
+            'price' => 500000,
             'category_id' => 1,
         ]);
         Product::create([
-            'name' => "Baju Kuning",
-            'image' => "https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//catalog-image/92/MTA-105434280/no-brand_kaos-polos-kuning-premium-bahan-cotton_full01.jpg",
-            'description' => "Baju warna kuning",
-            'price' => 150000,
+            'name' => "Kursi Besi",
+            'image' => "https://res.cloudinary.com/dfa5oe9qp/image/upload/v1733829278/furniture/jf5ljbeaxoiqwesmtwk6.jpg",
+            'description' => "Kursi besi hitam",
+            'price' => 250000,
             'category_id' => 1,
         ]);
         Product::create([
-            'name' => "Baju hijau",
-            'image' => "https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full/catalog-image/MTA-99600694/koze_koze_-_premium_comfort_green_t-shirt_-_kaos_polos_hijau_full01_eukw1txs.jpg",
-            'description' => "Baju warna hijau",
-            'price' => 120000,
+            'name' => "Kursi sofa satuan",
+            'image' => "https://res.cloudinary.com/dfa5oe9qp/image/upload/v1733829278/furniture/d2tnk9lyneh5yzi2lzkl.jpg",
+            'description' => "Kursi sofa satuan kuning",
+            'price' => 800000,
             'category_id' => 1,
         ]);
     }
