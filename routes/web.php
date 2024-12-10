@@ -8,3 +8,4 @@ Route::get('products', [\App\Http\Controllers\HomeController::class, 'products']
 Route::get('login', [\App\Http\Controllers\AuthController::class, 'loginPage'])->name('login-page');
 Route::post('login', [\App\Http\Controllers\AuthController::class, 'login'])->name('login');
 Route::get('register', [\App\Http\Controllers\AuthController::class, 'registerPage'])->name('register-page');
+Route::post('register', [\App\Http\Controllers\AuthController::class, 'register'])->name('register');
