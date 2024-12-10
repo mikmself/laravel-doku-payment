@@ -21,7 +21,7 @@
                 <h3 class="text-lg font-bold mb-4">Informasi Pengiriman</h3>
                 <div class="mb-4">
                     <label for="name" class="block text-gray-700 font-medium">Nama Lengkap</label>
-                    <input type="text" name="name" id="name" class="w-full px-4 py-2 mt-2 bg-gray-100 border border-gray-300 rounded-md" required>
+                    <input type="text" name="name" id="name" class="w-full px-4 py-2 mt-2 bg-gray-100 border border-gray-300 rounded-md"  value="{{auth()->user()->name}}" disabled>
                 </div>
                 <div class="mb-4">
                     <label for="address" class="block text-gray-700 font-medium">Alamat Pengiriman</label>
