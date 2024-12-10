@@ -1,5 +1,5 @@
 @include('sweetalert::alert')
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -21,14 +21,21 @@
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPoKRpdnIQG2_UHaZ-CFBy8Gzj3wmuE3bKoQ&s" alt="Logo" class="w-12 h-12 rounded-full shadow-md">
             <span class="text-3xl font-extrabold tracking-widest hover:text-pink-300">Ataka Furniture</span>
         </a>
-        <nav class="flex space-x-6">
+        <nav class="flex items-center space-x-6">
             <a href="#" class="text-lg font-medium hover:text-pink-400 transition">Home</a>
             <a href="{{ route('products') }}" class="text-lg font-medium hover:text-pink-400 transition">Produk</a>
             <a href="{{ route('index') }}/#about-us" class="text-lg font-medium hover:text-pink-400 transition">About</a>
         </nav>
         <div class="flex space-x-4">
-            <a href="{{ route('login') }}" class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-600">Login</a>
-            <a href="{{ route('register') }}" class="bg-white text-black px-4 py-2 rounded hover:bg-gray-100">Register</a>
+            @auth
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-300 transition">Logout</button>
+                </form>
+            @else
+                <a href="{{ route('login') }}" class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-300 transition">Login</a>
+                <a href="{{ route('register') }}" class="bg-white text-black px-4 py-2 rounded hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-300 transition">Register</a>
+            @endauth
         </div>
     </div>
 </header>
@@ -41,7 +48,7 @@
         </div>
         <h2 class="text-2xl font-bold text-gray-700 text-center mb-6">Create an Account</h2>
         <p class="text-gray-500 text-center mb-8">Join us by filling the form below</p>
-        <form method="POST" action="/register">
+        <form method="POST" action="{{ route('register') }}">
             @csrf
             <div class="mb-4">
                 <label for="name" class="block text-gray-700 font-medium">Full Name</label>

@@ -1,3 +1,7 @@
+@php
+    use Illuminate\Support\Facades\Session;
+@endphp
+
 @if (config('sweetalert.alwaysLoadJS') === true || Session::has('alert.config') || Session::has('alert.delete'))
     @if (config('sweetalert.animation.enable'))
         <link rel="stylesheet" href="{{ config('sweetalert.animatecss') }}">
@@ -14,7 +18,6 @@
     @if (Session::has('alert.delete') || Session::has('alert.config'))
         <script>
             document.addEventListener('click', function(event) {
-                // Check if the clicked element or its parent has the attribute
                 var target = event.target;
                 var confirmDeleteElement = target.closest('[data-confirm-delete]');
 
@@ -28,7 +31,7 @@
                             form.innerHTML = `
                             @csrf
                             @method('DELETE')
-                        `;
+                            `;
                             document.body.appendChild(form);
                             form.submit();
                         }
@@ -37,7 +40,7 @@
             });
 
             @if (Session::has('alert.config'))
-                Swal.fire({!! Session::pull('alert.config') !!});
+            Swal.fire({!! Session::pull('alert.config') !!});
             @endif
         </script>
     @endif

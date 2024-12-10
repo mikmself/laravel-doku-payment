@@ -27,7 +27,7 @@ class AuthController extends Controller
             ]);
             if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
                 Alert::success('Login Success', 'Welcome back, ' . Auth::user()->name . '!');
-                return redirect()->intended('/dashboard');
+                return redirect()->intended('/');
             } else {
                 throw ValidationException::withMessages([
                     'email' => 'Email atau password salah.',
@@ -37,35 +37,38 @@ class AuthController extends Controller
             Alert::error('Login Failed', $e->getMessage());
             return redirect()->back()->withErrors($e->errors())->withInput();
         } catch (\Throwable $e) {
-            // Penanganan untuk kesalahan lainnya
             Alert::error('Unexpected Error', 'Something went wrong. Please try again.');
             return redirect()->back()->withInput();
         }
     }
     public function register(Request $request)
     {
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:6|confirmed',
+        ]);
+
         try {
-            $request->validate([
-                'name' => 'required|string|max:255',
-                'email' => 'required|email|unique:users,email',
-                'password' => 'required|min:6|confirmed',
-            ]);
             DB::beginTransaction();
+
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
-                'role' => "user",
+                'role' => 'user',
             ]);
+
             DB::commit();
-            Alert::success('Registration Successful', 'Welcome, ' . $user->name . '! Please login to continue.');
+
+            alert()->success('Registration Success', 'Your account has been created successfully.');
+
             return redirect()->route('login');
-        } catch (ValidationException $e) {
-            Alert::error('Registration Failed', 'Please check the form and try again.');
-            return redirect()->back()->withErrors($e->errors())->withInput();
         } catch (\Throwable $e) {
             DB::rollBack();
-            Alert::error('Unexpected Error', 'Something went wrong. Please try again.');
+
+            alert()->error('Registration Failed', 'Something went wrong. Please try again.');
+
             return redirect()->back()->withInput();
         }
     }

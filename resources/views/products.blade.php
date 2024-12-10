@@ -8,28 +8,27 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100" >
-<header class="bg-gray-800 p-4 text-white">
-    <div class="container mx-auto flex flex-wrap justify-between items-center">
-        <a href="/" class="flex items-center text-white">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPoKRpdnIQG2_UHaZ-CFBy8Gzj3wmuE3bKoQ&s" alt="Logo" class="w-12 h-12 mr-2 rounded-full">
-            <span class="text-2xl font-semibold">Ataka Furniture</span>
+<header class="bg-gray-800 p-4 text-white sticky top-0 z-50 shadow-lg">
+    <div class="container mx-auto flex justify-between items-center">
+        <a href="/" class="flex items-center space-x-2">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPoKRpdnIQG2_UHaZ-CFBy8Gzj3wmuE3bKoQ&s" alt="Logo" class="w-12 h-12 rounded-full shadow-md">
+            <span class="text-3xl font-extrabold tracking-widest hover:text-pink-300">Ataka Furniture</span>
         </a>
-        <nav class="flex space-x-4">
-            <a href="/" class="text-white hover:text-gray-400">Home</a>
-            <a href="{{ route('products') }}" class="text-white hover:text-gray-400">Produk</a>
-            <a href="{{ route('index') }}/#about-us" class="text-white hover:text-gray-400">About</a>
+        <nav class="flex items-center space-x-6">
+            <a href="#" class="text-lg font-medium hover:text-pink-400 transition">Home</a>
+            <a href="{{ route('products') }}" class="text-lg font-medium hover:text-pink-400 transition">Produk</a>
+            <a href="{{ route('index') }}/#about-us" class="text-lg font-medium hover:text-pink-400 transition">About</a>
         </nav>
-        <div class="flex items-center space-x-4">
-            @if(Auth::check())
-                <span>{{ Auth::user()->name }}</span>
-                <form action="{{ route('logout') }}" method="POST">
+        <div class="flex space-x-4">
+            @auth
+                <form method="POST" action="{{ route('logout') }}">
                     @csrf
-                    <button type="submit" class="text-white hover:text-gray-400">Logout</button>
+                    <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-300 transition">Logout</button>
                 </form>
             @else
-                <a href="{{ route('login') }}" class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-600">Login</a>
-                <a href="{{ route('register') }}" class="bg-white text-black px-4 py-2 rounded hover:bg-gray-100">Register</a>
-            @endif
+                <a href="{{ route('login') }}" class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-300 transition">Login</a>
+                <a href="{{ route('register') }}" class="bg-white text-black px-4 py-2 rounded hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-300 transition">Register</a>
+            @endauth
         </div>
     </div>
 </header>

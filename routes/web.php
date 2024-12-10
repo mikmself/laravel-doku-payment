@@ -11,5 +11,5 @@ Route::get('register', [\App\Http\Controllers\AuthController::class, 'registerPa
 Route::post('register', [\App\Http\Controllers\AuthController::class, 'register'])->name('register');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
+    Route::post('logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 });
