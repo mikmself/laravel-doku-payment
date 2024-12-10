@@ -19,12 +19,12 @@ class CheckoutController extends Controller
     {
         Config::$serverKey = env('MIDTRANS_SERVER_KEY');
         Config::$clientKey = env('MIDTRANS_CLIENT_KEY');
-        Config::$isProduction = false;  // Set false untuk mode sandbox
+        Config::$isProduction = false;
         Config::$isSanitized = true;
         Config::$is3ds = true;
         $transactionDetails = array(
             'order_id' => 'order_' . time(),
-            'gross_amount' => (int) $request->total_price,
+            'gross_amount' => (int) Product::where('id', 1)->first()->price,
         );
         $customerDetails = array(
             'first_name' => $request->name,
@@ -44,7 +44,7 @@ class CheckoutController extends Controller
             $snapToken = Snap::getSnapToken($transaction);
             return view('payment', compact('snapToken'));
         } catch (\Exception $e) {
-            return back()->with('error', 'Terjadi kesalahan, coba lagi!');
+            return back()->with('error', $e->getMessage());
         }
     }
 }

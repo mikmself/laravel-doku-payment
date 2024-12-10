@@ -16,6 +16,7 @@
         </div>
         <form method="POST" action="{{ route('checkout.process-checkout') }}">
             @csrf
+            <input type="hidden" name="product_id" value="{{$product->id}}">
             <div class="bg-white shadow-md rounded-lg p-6 mb-6">
                 <h3 class="text-lg font-bold mb-4">Informasi Pengiriman</h3>
                 <div class="mb-4">
