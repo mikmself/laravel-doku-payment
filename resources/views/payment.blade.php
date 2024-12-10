@@ -22,21 +22,45 @@
     <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script>
     <script>
         const snapToken = "{{ $snapToken }}";
-
         document.getElementById("payButton").addEventListener("click", function() {
             snap.pay(snapToken, {
                 onSuccess: function(result) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Pembayaran Berhasil!',
-                        text: 'Terima kasih telah melakukan pembayaran.',
-                        confirmButtonText: 'Lanjutkan ke Produk',
-                        confirmButtonColor: '#3085d6',
-                        showCancelButton: false
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            window.location.href = "{{ route('products', $product->id) }}";
-                        }
+                    fetch("{{ route('checkout.storeTransaction') }}", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        },
+                        body: JSON.stringify({
+                            user_id: {{ auth()->user()->id }},
+                            product_id: {{ $product->id }},
+                            amount: result.gross_amount,
+                            payment_method: result.payment_type,
+                            transaction_status: 'success',
+                            transaction_id: result.transaction_id,
+                        })
+                    }).then(response => response.json())
+                        .then(data => {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Pembayaran Berhasil!',
+                                text: 'Terima kasih telah melakukan pembayaran.',
+                                confirmButtonText: 'Lanjutkan ke Produk',
+                                confirmButtonColor: '#3085d6',
+                                showCancelButton: false
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    window.location.href = "{{ route('products', $product->id) }}";
+                                }
+                            });
+                        }).catch(error => {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Terjadi Kesalahan!',
+                            text: 'Ada masalah saat menyimpan transaksi.',
+                            confirmButtonText: 'Tutup',
+                            confirmButtonColor: '#d33'
+                        });
                     });
                 },
                 onPending: function(result) {
@@ -49,12 +73,37 @@
                     });
                 },
                 onError: function(result) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Terjadi Kesalahan!',
-                        text: 'Ada masalah dengan transaksi Anda, harap coba lagi.',
-                        confirmButtonText: 'Tutup',
-                        confirmButtonColor: '#d33'
+                    fetch("{{ route('checkout.storeTransaction') }}", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        },
+                        body: JSON.stringify({
+                            user_id: {{ auth()->user()->id }},
+                            product_id: {{ $product->id }},
+                            amount: result.gross_amount,
+                            payment_method: result.payment_type,
+                            transaction_status: 'failed',
+                            transaction_id: result.transaction_id,
+                        })
+                    }).then(response => response.json())
+                        .then(data => {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Pembayaran Gagal!',
+                                text: 'Ada masalah dengan transaksi Anda, harap coba lagi.',
+                                confirmButtonText: 'Tutup',
+                                confirmButtonColor: '#d33'
+                            });
+                        }).catch(error => {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Terjadi Kesalahan!',
+                            text: 'Ada masalah saat menyimpan transaksi.',
+                            confirmButtonText: 'Tutup',
+                            confirmButtonColor: '#d33'
+                        });
                     });
                 }
             });

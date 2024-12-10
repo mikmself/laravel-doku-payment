@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Midtrans\Snap;
 use Midtrans\Config;
-use Midtrans\Transaction;
 
 class CheckoutController extends Controller
 {
@@ -46,6 +46,28 @@ class CheckoutController extends Controller
             return view('payment', compact('snapToken','product'));
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
+        }
+    }
+    public function storeTransaction(Request $request)
+    {
+        try {
+            $transaction = Transaction::create([
+                'user_id' => $request->user_id,
+                'product_id' => $request->product_id,
+                'amount' => $request->amount,
+                'payment_method' => $request->payment_method,
+                'transaction_status' => $request->transaction_status,
+                'transaction_id' => $request->transaction_id,
+            ]);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Transaksi berhasil disimpan.'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Terjadi kesalahan saat menyimpan transaksi.',
+            ], 500);
         }
     }
 }
