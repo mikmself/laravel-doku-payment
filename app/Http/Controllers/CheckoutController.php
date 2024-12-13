@@ -23,7 +23,7 @@ class CheckoutController extends Controller
         Config::$is3ds = true;
         $transactionDetails = array(
             'order_id' => 'order_' . time(),
-            'gross_amount' => (int) Product::where('id', 1)->first()->price,
+            'gross_amount' => (int) Product::where('id', $request->product_id)->first()->price,
         );
         $customerDetails = array(
             'first_name' => $request->name,
@@ -41,7 +41,7 @@ class CheckoutController extends Controller
         );
         try {
             $snapToken = Snap::getSnapToken($transaction);
-            $product = Product::where('id', 1)->first();
+            $product = Product::where('id', $request->product_id)->first();
             return view('payment', compact('snapToken','product'));
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
